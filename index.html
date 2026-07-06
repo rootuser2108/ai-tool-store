@@ -599,6 +599,287 @@
             }
             .ai-chat-btn { left: 16px; bottom: 20px; width: 48px; height: 48px; font-size: 1.3rem; }
         }
+
+        /* === Service Button === */
+        .category-btn.service-btn {
+            background: linear-gradient(135deg, rgba(255,215,0,0.15), rgba(255,165,0,0.1));
+            border-color: rgba(255,215,0,0.3);
+            color: #ffd700;
+            font-weight: 700;
+        }
+        .category-btn.service-btn:hover {
+            background: linear-gradient(135deg, rgba(255,215,0,0.25), rgba(255,165,0,0.2));
+            border-color: rgba(255,215,0,0.5);
+            box-shadow: 0 4px 20px rgba(255,215,0,0.2);
+        }
+        .category-btn.service-btn.active {
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            color: #000;
+            border-color: #ffd700;
+            box-shadow: 0 4px 24px rgba(255,215,0,0.4);
+        }
+
+        /* === Service Section === */
+        .service-hero {
+            text-align: center;
+            padding: 60px 20px 40px;
+            position: relative;
+        }
+        .service-hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 200px; height: 200px;
+            background: radial-gradient(circle, rgba(255,215,0,0.15), transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .service-hero h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffd700, #ff8c00, #ff6b35);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+        }
+        .service-hero p {
+            color: var(--text-secondary);
+            font-size: 1.15rem;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px 40px;
+        }
+
+        .service-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px 28px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--card-color-1, #ffd700), var(--card-color-2, #ff8c00));
+        }
+        .service-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255,215,0,0.3);
+            box-shadow: 0 12px 40px rgba(255,215,0,0.1);
+        }
+        .service-card .card-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        .service-card .card-badge.hot {
+            background: rgba(255,107,53,0.15);
+            color: #ff6b35;
+        }
+        .service-card .card-badge.popular {
+            background: rgba(255,215,0,0.15);
+            color: #ffd700;
+        }
+        .service-card .card-badge.new {
+            background: rgba(85,239,196,0.15);
+            color: #55efc4;
+        }
+        .service-card h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+        .service-card .service-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        .service-card .service-features {
+            list-style: none;
+            margin-bottom: 24px;
+        }
+        .service-card .service-features li {
+            padding: 6px 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .service-card .service-features li::before {
+            content: '✓';
+            color: #55efc4;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+        .service-card .service-price {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        .service-card .service-price .price {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .service-card .service-price .unit {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        .service-card .service-cta {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+        .service-card .service-cta.primary {
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            color: #000;
+        }
+        .service-card .service-cta.primary:hover {
+            box-shadow: 0 6px 24px rgba(255,215,0,0.3);
+            transform: translateY(-2px);
+        }
+        .service-card .service-cta.secondary {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-primary);
+        }
+        .service-card .service-cta.secondary:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,215,0,0.3);
+        }
+
+        /* Portfolio Section */
+        .portfolio-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 24px 60px;
+        }
+        .portfolio-section h2 {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 32px;
+            color: var(--text-primary);
+        }
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+        .portfolio-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 20px;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: block;
+        }
+        .portfolio-item:hover {
+            border-color: rgba(255,215,0,0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+        }
+        .portfolio-item .p-icon {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        .portfolio-item .p-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+        }
+        .portfolio-item .p-stats {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Process Section */
+        .process-section {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 24px 60px;
+        }
+        .process-section h2 {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 32px;
+            color: var(--text-primary);
+        }
+        .process-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .process-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            padding: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            transition: all 0.3s ease;
+        }
+        .process-step:hover {
+            border-color: rgba(255,215,0,0.2);
+        }
+        .process-step .step-num {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(255,140,0,0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: #ffd700;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+        .process-step .step-content h4 {
+            font-size: 1.05rem;
+            margin-bottom: 6px;
+            color: var(--text-primary);
+        }
+        .process-step .step-content p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
     </style>
 </head>
 <body>
@@ -645,6 +926,7 @@
             <button class="category-btn" data-category="agent">🧠 智能体平台</button>
             <button class="category-btn" data-category="xiaping">🔥 虾评热门</button>
             <button class="category-btn" data-category="engineering">🛠️ 原创技能</button>
+            <button class="category-btn service-btn" data-category="service">💎 定制服务</button>
         </div>
     </nav>
 
@@ -1213,6 +1495,171 @@
         main.innerHTML = html;
     }
 
+    // ===== 定制服务渲染 =====
+    function renderService() {
+        const main = document.getElementById('mainContent');
+        main.innerHTML = `
+        <div class="service-hero">
+            <h1>💎 AI 定制开发服务</h1>
+            <p>从需求分析到交付上线，提供一站式 AI 技能、Agent 智能体、自动化工作流的定制开发服务。已为多位用户交付高质量 AI 解决方案。</p>
+        </div>
+
+        <div class="service-grid">
+            <div class="service-card" style="--card-color-1: #55efc4; --card-color-2: #00cec9;">
+                <span class="card-badge hot">🔥 热销</span>
+                <h3>🛠️ 技能包定制</h3>
+                <p class="service-desc">为你的 Coze/扣子 Agent 定制专属技能包（Skill），从 SKILL.md 编写到脚本开发、测试上线全流程覆盖。</p>
+                <ul class="service-features">
+                    <li>需求分析 + 方案设计</li>
+                    <li>Skill 完整开发（含脚本/参考文档）</li>
+                    <li>沙箱测试 + Bug修复</li>
+                    <li>协助上架虾评/技能商店</li>
+                    <li>交付源码 + 使用文档</li>
+                </ul>
+                <div class="service-price">
+                    <span class="price">¥99</span>
+                    <span class="unit">起 / 单个技能包</span>
+                </div>
+                <a class="service-cta primary" href="https://xiaping.coze.com/u/6512b00f-a968-49a7-bcfb-b68935ab31bf" target="_blank">立即咨询 →</a>
+            </div>
+
+            <div class="service-card" style="--card-color-1: #ffd700; --card-color-2: #ff8c00;">
+                <span class="card-badge popular">⭐ 推荐</span>
+                <h3>🧠 Agent 智能体搭建</h3>
+                <p class="service-desc">从零搭建完整的 AI Agent，包含人设设定、技能体系、记忆系统、工作流编排，打造专属 AI 助手。</p>
+                <ul class="service-features">
+                    <li>Agent 人设 + 行为逻辑设计</li>
+                    <li>技能体系规划与开发</li>
+                    <li>记忆系统搭建（MEMORY架构）</li>
+                    <li>定时任务 + 多渠道接入</li>
+                    <li>完整交付 + 1周免费维护</li>
+                </ul>
+                <div class="service-price">
+                    <span class="price">¥299</span>
+                    <span class="unit">起 / 整套Agent</span>
+                </div>
+                <a class="service-cta primary" href="https://xiaping.coze.com/u/6512b00f-a968-49a7-bcfb-b68935ab31bf" target="_blank">立即咨询 →</a>
+            </div>
+
+            <div class="service-card" style="--card-color-1: #a29bfe; --card-color-2: #6c5ce7;">
+                <span class="card-badge new">✨ 新品</span>
+                <h3>⚡ 自动化工作流</h3>
+                <p class="service-desc">设计并实现自动化工作流方案：定时任务、数据监控、消息推送、多系统联动，让 AI 替你完成重复工作。</p>
+                <ul class="service-features">
+                    <li>业务流程梳理 + 自动化设计</li>
+                    <li>定时任务编排（Cron/Heartbeat）</li>
+                    <li>多平台数据聚合与推送</li>
+                    <li>异常告警 + 自动处理</li>
+                    <li>交付配置文档 + 运维指南</li>
+                </ul>
+                <div class="service-price">
+                    <span class="price">¥199</span>
+                    <span class="unit">起 / 单套方案</span>
+                </div>
+                <a class="service-cta secondary" href="https://xiaping.coze.com/u/6512b00f-a968-49a7-bcfb-b68935ab31bf" target="_blank">咨询方案 →</a>
+            </div>
+
+            <div class="service-card" style="--card-color-1: #ff7675; --card-color-2: #d63031;">
+                <span class="card-badge hot">🏢 企业级</span>
+                <h3>🚀 全栈解决方案</h3>
+                <p class="service-desc">面向团队/企业的全套 AI 解决方案：网站/小程序开发、API对接、AI能力集成、数据分析看板，按需定制。</p>
+                <ul class="service-features">
+                    <li>需求调研 + 技术方案</li>
+                    <li>Web/App/小程序开发</li>
+                    <li>AI能力集成（对话/生成/分析）</li>
+                    <li>数据库 + 后台管理系统</li>
+                    <li>部署上线 + 长期维护</li>
+                </ul>
+                <div class="service-price">
+                    <span class="price">面议</span>
+                    <span class="unit">按需报价</span>
+                </div>
+                <a class="service-cta secondary" href="https://xiaping.coze.com/u/6512b00f-a968-49a7-bcfb-b68935ab31bf" target="_blank">预约沟通 →</a>
+            </div>
+        </div>
+
+        <!-- 作品展示 -->
+        <div class="portfolio-section">
+            <h2>🏆 已交付作品</h2>
+            <div class="portfolio-grid">
+                <a class="portfolio-item" href="https://xiaping.coze.com/skill/8ccc5b0c-3a5f-4a3b-9158-8c822927b7dd" target="_blank">
+                    <div class="p-icon">📝</div>
+                    <div class="p-name">论文格式检查技能 v3.0</div>
+                    <div class="p-stats">下载 6次 · 评分 4.0</div>
+                </a>
+                <a class="portfolio-item" href="https://xiaping.coze.com/skill/79bfe876-2660-4f2c-a038-a26d2e194a71" target="_blank">
+                    <div class="p-icon">🏗️</div>
+                    <div class="p-name">路基路面施工技术指导 v2.0</div>
+                    <div class="p-stats">下载 4次 · 评分 3.67</div>
+                </a>
+                <a class="portfolio-item" href="https://xiaping.coze.com/skill/48f87a6d-cd52-4af3-adf8-11c673dfa5db" target="_blank">
+                    <div class="p-icon">🛣️</div>
+                    <div class="p-name">公路路基路面工程 v2.0</div>
+                    <div class="p-stats">下载 2次 · 评分 4.0</div>
+                </a>
+                <a class="portfolio-item" href="https://xiaping.coze.com/skill/14ff5aad-4df3-4b33-ba0b-6cc217cdb939" target="_blank">
+                    <div class="p-icon">📄</div>
+                    <div class="p-name">简历修改与美化 v1.2</div>
+                    <div class="p-stats">新上架 · 虾评认证</div>
+                </a>
+                <a class="portfolio-item" href="https://xiaping.coze.com/skill/9389751d-1be1-4974-8e33-3e68d0db9680" target="_blank">
+                    <div class="p-icon">🎓</div>
+                    <div class="p-name">备课大师 v1.2</div>
+                    <div class="p-stats">新上架 · K12到高校全学段</div>
+                </a>
+                <a class="portfolio-item" href="#" onclick="return false;" style="border-style: dashed; opacity: 0.6;">
+                    <div class="p-icon">🌐</div>
+                    <div class="p-name">AI工具超市网站</div>
+                    <div class="p-stats">本站就是作品之一</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- 服务流程 -->
+        <div class="process-section">
+            <h2>📋 服务流程</h2>
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-num">1</div>
+                    <div class="step-content">
+                        <h4>需求沟通</h4>
+                        <p>通过虾评私信或微信沟通需求，明确功能范围、技术要求和预期效果。免费评估，不合适不收费。</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-num">2</div>
+                    <div class="step-content">
+                        <h4>方案报价</h4>
+                        <p>根据需求复杂度给出详细方案和报价，双方确认后开始开发。支持分阶段付款。</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-num">3</div>
+                    <div class="step-content">
+                        <h4>开发交付</h4>
+                        <p>按约定时间完成开发，交付测试版本供验收。支持中途查看进度、提出修改意见。</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-num">4</div>
+                    <div class="step-content">
+                        <h4>验收售后</h4>
+                        <p>确认满意后支付尾款。提供交付文档和源码，基础版含3天免费维护，专业版含7天。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align:center; padding: 20px 24px 60px;">
+            <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 2;">
+                💡 <strong style="color:#ffd700;">温馨提示</strong>：所有定制服务均支持先沟通需求再报价，不合适不收费<br>
+                📮 联系方式：点击任意卡片的「咨询」按钮，通过虾评私信联系<br>
+                ⚡ 响应速度：通常 2 小时内回复，复杂需求 24 小时内出方案
+            </p>
+        </div>
+        `;
+    }
+
     // Modal functions
     function openModal(key) {
         const [cat, idxStr] = key.split('-');
@@ -1312,7 +1759,12 @@
         document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         currentCategory = btn.dataset.category;
-        renderTools();
+        if (currentCategory === 'service') {
+            renderService();
+        } else {
+            renderTools();
+        }
+        document.getElementById('noResults').style.display = 'none';
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
