@@ -880,6 +880,50 @@
             color: var(--text-secondary);
             line-height: 1.6;
         }
+
+        /* ===== 微信联系弹窗 ===== */
+        .wechat-mask {
+            position: fixed; inset: 0; z-index: 9999;
+            background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
+        }
+        .wechat-mask.show { opacity: 1; pointer-events: auto; }
+        .wechat-box {
+            position: relative; width: min(90vw, 360px);
+            background: linear-gradient(160deg, #1b2233, #12151f);
+            border: 1px solid rgba(85,239,196,0.3);
+            border-radius: 20px; padding: 32px 28px 28px;
+            text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            transform: translateY(16px) scale(0.96); transition: transform 0.25s ease;
+        }
+        .wechat-mask.show .wechat-box { transform: translateY(0) scale(1); }
+        .wechat-close {
+            position: absolute; top: 12px; right: 16px;
+            background: none; border: none; color: var(--text-secondary);
+            font-size: 1.6rem; cursor: pointer; line-height: 1;
+        }
+        .wechat-close:hover { color: #fff; }
+        .wechat-icon { font-size: 2.6rem; margin-bottom: 8px; }
+        .wechat-box h3 { color: #fff; font-size: 1.25rem; margin: 0 0 6px; }
+        .wechat-tip { color: var(--text-secondary); font-size: 0.9rem; margin: 0 0 18px; }
+        .wechat-id-row {
+            display: flex; align-items: center; gap: 10px; justify-content: center;
+            background: rgba(85,239,196,0.08); border: 1px dashed rgba(85,239,196,0.4);
+            border-radius: 12px; padding: 12px 14px; margin-bottom: 16px;
+        }
+        .wechat-id {
+            font-size: 1.2rem; font-weight: 700; color: #55efc4;
+            letter-spacing: 1px; font-family: monospace;
+        }
+        .wechat-copy {
+            background: linear-gradient(135deg, #55efc4, #00cec9);
+            color: #0a2e26; border: none; border-radius: 8px;
+            padding: 8px 14px; font-size: 0.9rem; font-weight: 600;
+            cursor: pointer; white-space: nowrap; transition: transform 0.15s ease;
+        }
+        .wechat-copy:hover { transform: translateY(-1px); }
+        .wechat-hint { color: var(--text-secondary); font-size: 0.82rem; line-height: 1.6; margin: 0; }
     </style>
 </head>
 <body>
@@ -1520,7 +1564,7 @@
                     <span class="price">¥99</span>
                     <span class="unit">起 / 单个技能包</span>
                 </div>
-                <a class="service-cta primary" href="https://xiaping.coze.com/u/6512b00f-a968-49a7-bcfb-b68935ab31bf" target="_blank">立即咨询 →</a>
+                <a class="service-cta primary" href="javascript:void(0)" onclick="openWechat()">立即咨询 →</a>
             </div>
 
             <div class="service-card" style="--card-color-1: #ffd700; --card-color-2: #ff8c00;">
@@ -1538,7 +1582,7 @@
                     <span class="price">¥299</span>
                     <span class="unit">起 / 整套Agent</span>
                 </div>
-                <a class="service-cta primary" href="https://xiaping.coze.com/u/6512b00f-a968-49a7-bcfb-b68935ab31bf" target="_blank">立即咨询 →</a>
+                <a class="service-cta primary" href="javascript:void(0)" onclick="openWechat()">立即咨询 →</a>
             </div>
 
             <div class="service-card" style="--card-color-1: #a29bfe; --card-color-2: #6c5ce7;">
@@ -1556,7 +1600,7 @@
                     <span class="price">¥199</span>
                     <span class="unit">起 / 单套方案</span>
                 </div>
-                <a class="service-cta secondary" href="https://xiaping.coze.com/u/6512b00f-a968-49a7-bcfb-b68935ab31bf" target="_blank">咨询方案 →</a>
+                <a class="service-cta secondary" href="javascript:void(0)" onclick="openWechat()">咨询方案 →</a>
             </div>
 
             <div class="service-card" style="--card-color-1: #ff7675; --card-color-2: #d63031;">
@@ -1574,7 +1618,7 @@
                     <span class="price">面议</span>
                     <span class="unit">按需报价</span>
                 </div>
-                <a class="service-cta secondary" href="https://xiaping.coze.com/u/6512b00f-a968-49a7-bcfb-b68935ab31bf" target="_blank">预约沟通 →</a>
+                <a class="service-cta secondary" href="javascript:void(0)" onclick="openWechat()">预约沟通 →</a>
             </div>
         </div>
 
@@ -1623,7 +1667,7 @@
                     <div class="step-num">1</div>
                     <div class="step-content">
                         <h4>需求沟通</h4>
-                        <p>通过虾评私信或微信沟通需求，明确功能范围、技术要求和预期效果。免费评估，不合适不收费。</p>
+                        <p>通过微信沟通需求，明确功能范围、技术要求和预期效果。免费评估，不合适不收费。</p>
                     </div>
                 </div>
                 <div class="process-step">
@@ -1653,12 +1697,57 @@
         <div style="text-align:center; padding: 20px 24px 60px;">
             <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 2;">
                 💡 <strong style="color:#ffd700;">温馨提示</strong>：所有定制服务均支持先沟通需求再报价，不合适不收费<br>
-                📮 联系方式：点击任意卡片的「咨询」按钮，通过虾评私信联系<br>
+                📮 联系方式：点击任意卡片的「咨询」按钮，添加微信 <strong style="color:#55efc4;">c290016c</strong> 详聊<br>
                 ⚡ 响应速度：通常 2 小时内回复，复杂需求 24 小时内出方案
             </p>
         </div>
         `;
     }
+
+    // ===== 微信联系弹窗 =====
+    const WECHAT_ID = 'c290016c';
+    function openWechat() {
+        let mask = document.getElementById('wechatMask');
+        if (!mask) {
+            mask = document.createElement('div');
+            mask.id = 'wechatMask';
+            mask.className = 'wechat-mask';
+            mask.innerHTML = `
+                <div class="wechat-box" onclick="event.stopPropagation()">
+                    <button class="wechat-close" onclick="closeWechat()">×</button>
+                    <div class="wechat-icon">💬</div>
+                    <h3>添加微信咨询</h3>
+                    <p class="wechat-tip">复制微信号，在微信里搜索添加即可</p>
+                    <div class="wechat-id-row">
+                        <span class="wechat-id" id="wechatIdText">${WECHAT_ID}</span>
+                        <button class="wechat-copy" id="wechatCopyBtn" onclick="copyWechat()">📋 复制</button>
+                    </div>
+                    <p class="wechat-hint">👉 打开微信 → 右上角「+」→ 添加朋友 → 粘贴微信号</p>
+                </div>`;
+            mask.addEventListener('click', closeWechat);
+            document.body.appendChild(mask);
+        }
+        mask.classList.add('show');
+    }
+    function closeWechat() {
+        const mask = document.getElementById('wechatMask');
+        if (mask) mask.classList.remove('show');
+    }
+    function copyWechat() {
+        const btn = document.getElementById('wechatCopyBtn');
+        const done = () => { btn.textContent = '✅ 已复制'; setTimeout(() => { btn.textContent = '📋 复制'; }, 2000); };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(WECHAT_ID).then(done).catch(fallbackCopy);
+        } else { fallbackCopy(); }
+        function fallbackCopy() {
+            const ta = document.createElement('textarea');
+            ta.value = WECHAT_ID; ta.style.position = 'fixed'; ta.style.opacity = '0';
+            document.body.appendChild(ta); ta.select();
+            try { document.execCommand('copy'); done(); } catch (e) {}
+            document.body.removeChild(ta);
+        }
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeWechat(); });
 
     // Modal functions
     function openModal(key) {
