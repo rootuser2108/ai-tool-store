@@ -597,6 +597,64 @@
         }
         .chat-settings-save:hover { opacity: 0.9; }
 
+
+        /* === Weekly Featured Carousel === */
+        .featured-section {
+            margin-bottom: 40px; padding: 28px;
+            background: linear-gradient(135deg, rgba(108, 92, 231, 0.08), rgba(0, 206, 201, 0.06));
+            border: 1px solid rgba(108, 92, 231, 0.15); border-radius: 20px;
+            position: relative; overflow: hidden;
+        }
+        .featured-section::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, var(--accent-1), var(--accent-2), var(--accent-3), var(--accent-4));
+        }
+        .featured-header {
+            display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
+        }
+        .featured-header h2 { font-size: 1.3rem; font-weight: 700; }
+        .featured-header .featured-badge {
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+            color: white; padding: 3px 10px; border-radius: 10px;
+            font-size: 0.7rem; font-weight: 600;
+        }
+        .featured-scroll {
+            display: flex; gap: 16px; overflow-x: auto; padding-bottom: 8px;
+            scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+        }
+        .featured-scroll::-webkit-scrollbar { height: 4px; }
+        .featured-scroll::-webkit-scrollbar-track { background: transparent; }
+        .featured-scroll::-webkit-scrollbar-thumb { background: rgba(108,92,231,0.3); border-radius: 4px; }
+        .featured-card {
+            flex: 0 0 260px; scroll-snap-align: start;
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 14px; padding: 20px; cursor: pointer;
+            transition: all 0.3s ease; text-decoration: none; position: relative; overflow: hidden;
+        }
+        .featured-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, var(--card-accent, var(--accent-1)), transparent);
+        }
+        .featured-card:hover {
+            transform: translateY(-3px); border-color: var(--card-accent, var(--accent-1));
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+        .featured-card .fc-icon { font-size: 2rem; margin-bottom: 10px; }
+        .featured-card .fc-name { font-size: 1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+        .featured-card .fc-maker { font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 8px; }
+        .featured-card .fc-desc {
+            font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5;
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+        }
+        .featured-card .fc-reason {
+            margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border);
+            font-size: 0.78rem; color: var(--accent-2); font-style: italic;
+        }
+        @media (max-width: 768px) {
+            .featured-card { flex: 0 0 220px; }
+            .featured-section { padding: 20px 16px; }
+        }
+
         @media (max-width: 768px) {
             .logo { font-size: 2rem; }
             .subtitle { font-size: 0.95rem; }
@@ -1498,6 +1556,43 @@
     let currentCategory = 'all';
     let searchKeyword = '';
 
+
+    // ===== Featured Tools (edit this array to update weekly picks) =====
+    const featuredTools = [
+        { name: "Claude Sonnet 5", reason: "Anthropic性价比之王，API降价60%" },
+        { name: "GPT-Image-2", reason: "首次准确渲染中文的AI绘画模型" },
+        { name: "Claude Code 动态工作流", reason: "1人指挥1000个AI并行工作" },
+        { name: "美团 LongCat-2.0", reason: "万亿参数开源，MIT协议" },
+        { name: "Cursor(新版)", reason: "AI原生IDE，一句话改全局" },
+        { name: "可灵AI(专业版)", reason: "快手出品，文字直接转视频" },
+    ];
+
+    function renderFeatured() {
+        if (currentCategory !== 'all' || searchKeyword) return '';
+        const picks = featuredTools.map(fp => {
+            const tool = tools.find(t => t.name === fp.name);
+            if (!tool) return '';
+            const isSkill = tool.category === 'engineering' || tool.category === 'xiaping';
+            const clickAction = isSkill ? `onclick="openModal('${tool.category}-${tools.indexOf(tool)}'); return false;"` : `href="${tool.url}" target="_blank" rel="noopener noreferrer"`;
+            const color = categoryColors[tool.category] || 'var(--accent-1)';
+            return `<a class="featured-card" ${clickAction} style="--card-accent: ${color}">
+                <div class="fc-icon">${tool.icon}</div>
+                <div class="fc-name">${tool.name}</div>
+                <div class="fc-maker">${tool.maker}</div>
+                <div class="fc-desc">${tool.desc}</div>
+                <div class="fc-reason">✨ ${fp.reason}</div>
+            </a>`;
+        }).join('');
+        return `<div class="featured-section">
+            <div class="featured-header">
+                <span style="font-size:1.5rem">⭐</span>
+                <h2>本周精选</h2>
+                <span class="featured-badge">2026.7 第28周</span>
+            </div>
+            <div class="featured-scroll">${picks}</div>
+        </div>`;
+    }
+
     function renderTools() {
         const main = document.getElementById('mainContent');
         const noResults = document.getElementById('noResults');
@@ -1525,7 +1620,7 @@
             grouped[tool.category].push(tool);
         });
 
-        let html = '';
+        let html = renderFeatured();
         const categoryOrder = ['assistant','writing','image','video','music','coding','search','office','agent','xiaping','engineering'];
 
         categoryOrder.forEach(cat => {
