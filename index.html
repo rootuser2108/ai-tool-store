@@ -32,6 +32,91 @@
             "query-input": "required name=search_term_string"
         }
     }
+
+    // ===== Scene Recommendations =====
+    const scenes = [
+        {id:'student', icon:'\ud83c\udf93', name:'学生党必备', desc:'课程论文、学习笔记、简历求职——这套工具包让你效率翻倍，少加班多出成果。', tools:['ChatGPT','DeepSeek','Kimi','Gamma','Notion AI','论文格式检查技能']},
+        {id:'creator', icon:'\ud83c\udfa8', name:'自媒体创作套装', desc:'写文案、做图、剪视频、配乐——一个人就能搞定一整套内容生产流。', tools:['ChatGPT','Midjourney','DALL·E 3','Suno AI','可灵AI','剪映','HeyGen']},
+        {id:'dev', icon:'\ud83d\udcbb', name:'程序员效率套装', desc:'写代码、调bug、做原型、部署上线——把重复工作交给AI，你只管创造力。', tools:['Claude Code','Cursor','GitHub Copilot','v0','Bolt.new','Perplexity']},
+        {id:'office', icon:'\ud83d\udcbc', name:'职场效率套装', desc:'PPT、会议纪要、邮件沟通、数据分析——打工人的反内卷神器。', tools:['ChatGPT','Gamma','Otter.ai','Notion AI','Beautiful.ai','Napkin AI']},
+        {id:'engineer', icon:'\u2699\ufe0f', name:'工程人工具箱', desc:'路基路面、桥梁设计、工程制图——土木人的AI神器，让计算和绘图更高效。', tools:['公路路基路面工程','路基路面施工技术指导','AutoCAD','ChatGPT','Perplexity']}
+    ];
+
+    function renderScenes() {
+        var section = document.getElementById('sceneSection');
+        if (!section) return;
+        var h = '<div class="scene-header"><h2>\\ud83c\\udfaf \\u573a\\u666f\\u63a8\\u8350</h2><span style="color:var(--text-secondary);font-size:.85rem">\\u6839\\u636e\\u4f60\\u7684\\u89d2\\u8272\\uff0c\\u4e00\\u952e\\u67e5\\u770b\\u63a8\\u8350\\u5de5\\u5177\\u5305</span></div>';
+        h += '<div class="scene-tabs">';
+        scenes.forEach(function(s,i){ h += '<div class="scene-tab'+(i===0?' active':'')+'" data-scene="'+s.id+'" onclick="switchScene(\\''+s.id+'\\')">' + s.icon + ' ' + s.name + '</div>'; });
+        h += '</div>';
+        scenes.forEach(function(s,i){
+            h += '<div class="scene-content'+(i===0?' active':'')+'" id="scene-'+s.id+'">';
+            h += '<p class="scene-desc">' + s.desc + '</p>';
+            h += '<div class="scene-tools">';
+            s.tools.forEach(function(tn){
+                var t = tools.find(function(x){return x.name===tn;});
+                if(t) h += '<a class="scene-tool-chip" href="'+(t.url||'#')+'" target="_blank" rel="noopener"><span class="chip-icon">'+t.icon+'</span>'+t.name+'</a>';
+            });
+            h += '</div></div>';
+        });
+        section.innerHTML = h;
+    }
+
+    function switchScene(id) {
+        document.querySelectorAll('.scene-tab').forEach(function(el){ el.classList.toggle('active', el.dataset.scene===id); });
+        document.querySelectorAll('.scene-content').forEach(function(el){ el.classList.toggle('active', el.id==='scene-'+id); });
+    }
+
+    // ===== Bookmark/Favorites =====
+    function getBookmarks() {
+        try { return JSON.parse(localStorage.getItem('aits_bookmarks') || '[]'); } catch(e) { return []; }
+    }
+    function saveBookmarks(list) { localStorage.setItem('aits_bookmarks', JSON.stringify(list)); }
+    function toggleBookmark(name, btn) {
+        var bm = getBookmarks();
+        var idx = bm.indexOf(name);
+        if (idx > -1) { bm.splice(idx, 1); btn.classList.remove('active'); }
+        else { bm.push(name); btn.classList.add('active'); }
+        saveBookmarks(bm);
+        updateFavFilter();
+    }
+    function updateFavFilter() {
+        var btn = document.getElementById('favFilterBtn');
+        if (!btn) return;
+        var bm = getBookmarks();
+        if (bm.length > 0) { btn.parentElement.classList.add('show'); btn.textContent = '\u2b50 我的收藏 (' + bm.length + ')'; }
+        else { btn.parentElement.classList.remove('show'); }
+    }
+    function filterFavorites() {
+        var btn = document.getElementById('favFilterBtn');
+        btn.classList.toggle('active');
+        renderTools();
+    }
+
+    function handleSubmit() {
+        var name = document.getElementById('submitName').value.trim();
+        var url = document.getElementById('submitUrl').value.trim();
+        var cat = document.getElementById('submitCat').value;
+        var desc = document.getElementById('submitDesc').value.trim();
+        if (!name || !url || !cat || !desc) { alert('\u8bf7\u586b\u5199\u6240\u6709\u5fc5\u586b\u9879'); return; }
+        // Store locally (since no backend)
+        var submissions = JSON.parse(localStorage.getItem('aits_submissions') || '[]');
+        submissions.push({name:name, url:url, category:cat, desc:desc, time:new Date().toISOString()});
+        localStorage.setItem('aits_submissions', JSON.stringify(submissions));
+        document.getElementById('submitForm').style.display = 'none';
+        document.getElementById('submitSuccess').style.display = 'block';
+    }
+
+    // Init scene + bookmarks on load
+    document.addEventListener('DOMContentLoaded', function() {
+        renderScenes();
+        // Restore bookmark states
+        var bm = getBookmarks();
+        document.querySelectorAll('.bookmark-btn').forEach(function(btn) {
+            if (bm.indexOf(btn.dataset.name) > -1) btn.classList.add('active');
+        });
+        updateFavFilter();
+    });
     </script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -976,6 +1061,47 @@
         .compare-table .ct-icon{font-size:1.5rem;text-align:center}
         .compare-modal .cm-close{display:block;margin:20px auto 0;padding:10px 28px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text-primary);cursor:pointer;font-size:.9rem}
         .compare-modal .cm-close:hover{background:var(--bg-card)}
+
+        /* Scene Recommendations */
+        .scene-section { position:relative; z-index:10; max-width:1400px; margin:30px auto; padding:0 24px; }
+        .scene-header { display:flex; align-items:center; gap:12px; margin-bottom:20px; }
+        .scene-header h2 { font-size:1.5rem; background:linear-gradient(135deg,var(--accent-4),var(--accent-3)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .scene-tabs { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; }
+        .scene-tab { padding:8px 16px; border-radius:20px; border:1px solid var(--border); background:var(--bg-card); color:var(--text-secondary); cursor:pointer; font-size:.85rem; transition:all .2s; }
+        .scene-tab:hover { border-color:var(--accent-4); color:var(--accent-4); }
+        .scene-tab.active { background:linear-gradient(135deg,var(--accent-4),var(--accent-3)); color:#fff; border-color:transparent; }
+        .scene-content { display:none; background:var(--bg-card); border-radius:16px; padding:24px; border:1px solid var(--border); }
+        .scene-content.active { display:block; }
+        .scene-desc { color:var(--text-secondary); margin-bottom:16px; font-size:.95rem; line-height:1.6; }
+        .scene-tools { display:flex; flex-wrap:wrap; gap:10px; }
+        .scene-tool-chip { display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border-radius:12px; background:rgba(108,92,231,.1); border:1px solid rgba(108,92,231,.2); color:var(--text-primary); font-size:.85rem; cursor:pointer; transition:all .2s; text-decoration:none; }
+        .scene-tool-chip:hover { background:rgba(108,92,231,.25); border-color:var(--accent-1); transform:translateY(-1px); }
+        .scene-tool-chip .chip-icon { font-size:1.1rem; }
+
+        /* Submit Tool Form */
+        .submit-section { position:relative; z-index:10; max-width:700px; margin:40px auto; padding:0 24px; }
+        .submit-form { background:var(--bg-card); border-radius:16px; padding:32px; border:1px solid var(--border); }
+        .submit-form h2 { font-size:1.4rem; margin-bottom:8px; background:linear-gradient(135deg,var(--accent-5),var(--accent-2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .submit-form .form-desc { color:var(--text-secondary); margin-bottom:24px; font-size:.9rem; }
+        .form-group { margin-bottom:16px; }
+        .form-group label { display:block; font-size:.85rem; color:var(--text-secondary); margin-bottom:6px; }
+        .form-group input, .form-group select, .form-group textarea { width:100%; padding:12px 16px; border-radius:10px; border:1px solid var(--border); background:var(--bg-secondary); color:var(--text-primary); font-size:.9rem; outline:none; transition:border .2s; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color:var(--accent-2); }
+        .form-group textarea { min-height:80px; resize:vertical; }
+        .submit-btn { width:100%; padding:14px; border-radius:12px; border:none; background:linear-gradient(135deg,var(--accent-5),var(--accent-2)); color:#fff; font-size:1rem; font-weight:600; cursor:pointer; transition:all .2s; }
+        .submit-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,206,201,.3); }
+        .submit-success { display:none; text-align:center; padding:40px; color:var(--accent-5); font-size:1.1rem; }
+
+        /* Bookmark/Favorites */
+        .bookmark-btn { position:absolute; top:12px; right:42px; z-index:3; width:22px; height:22px; border-radius:6px; background:rgba(0,0,0,.3); cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:.75rem; color:rgba(255,255,255,.4); transition:all .2s; border:none; }
+        .bookmark-btn:hover { color:var(--accent-4); background:rgba(253,203,110,.15); }
+        .bookmark-btn.active { color:var(--accent-4); background:rgba(253,203,110,.2); }
+        .bookmark-btn.active::after { content:'\\2605'; }
+        .bookmark-btn:not(.active)::after { content:'\\2606'; }
+        .fav-filter { display:none; align-items:center; gap:8px; margin-bottom:16px; }
+        .fav-filter.show { display:flex; }
+        .fav-filter button { padding:6px 14px; border-radius:16px; border:1px solid var(--accent-4); background:transparent; color:var(--accent-4); cursor:pointer; font-size:.8rem; transition:all .2s; }
+        .fav-filter button.active { background:var(--accent-4); color:#000; }
     </style>
 </head>
 <body>
@@ -1026,7 +1152,24 @@
         </div>
     </nav>
 
+    <div id="sceneSection" style="position:relative;z-index:10;max-width:1400px;margin:30px auto;padding:0 24px;"></div>
+    <div class="fav-filter" id="favFilter" style="max-width:1400px;margin:0 auto 10px;padding:0 24px;">
+        <button id="favFilterBtn" onclick="filterFavorites()"></button>
+    </div>
     <main class="main-content" id="mainContent"></main>
+    <div class="submit-section" id="submitSection">
+        <div class="submit-form" id="submitForm">
+            <h2>🚀 推荐新工具</h2>
+            <p class="form-desc">发现了好用的AI工具？推荐给我们，审核通过后将上架到超市！</p>
+            <div class="form-group"><label>工具名称 *</label><input type="text" id="submitName" placeholder="例如：Claude AI" required></div>
+            <div class="form-group"><label>工具网址 *</label><input type="url" id="submitUrl" placeholder="https://..." required></div>
+            <div class="form-group"><label>分类 *</label><select id="submitCat"><option value="">请选择分类</option><option value="assistant">💬 对话助手</option><option value="writing">✍️ 写作润色</option><option value="image">🎨 绘画设计</option><option value="video">🎬 视频创作</option><option value="music">🎵 音乐语音</option><option value="coding">💻 编程开发</option><option value="search">🔎 智能搜索</option><option value="office">📊 效率办公</option><option value="agent">🧠 智能体平台</option><option value="engineering">⚙️ 工程工具</option></select></div>
+            <div class="form-group"><label>简短描述 *</label><textarea id="submitDesc" placeholder="一句话描述这个工具的核心功能..." required></textarea></div>
+            <div class="form-group"><label>你的邮箱（可选）</label><input type="email" id="submitEmail" placeholder="审核结果通知"></div>
+            <button class="submit-btn" onclick="handleSubmit()">提交推荐</button>
+        </div>
+        <div class="submit-success" id="submitSuccess">✅ 感谢推荐！我们会尽快审核并上架。</div>
+    </div>
 
     <div class="no-results" id="noResults">
         <div class="emoji">🔮</div>
@@ -1619,6 +1762,9 @@
 
     function renderTools() {
         const main = document.getElementById('mainContent');
+        const favBtn = document.getElementById('favFilterBtn');
+        const showFavOnly = favBtn && favBtn.classList.contains('active');
+        const bm = showFavOnly ? getBookmarks() : null;
         const noResults = document.getElementById('noResults');
 
         let filtered = tools.filter(tool => {
@@ -1630,6 +1776,10 @@
                 (categoryNames[tool.category]?.name || '').includes(searchKeyword);
             return matchCategory && matchSearch;
         });
+
+        if (showFavOnly && bm && bm.length > 0) {
+            filtered = filtered.filter(t => bm.indexOf(t.name) > -1);
+        }
 
         if (filtered.length === 0) {
             main.innerHTML = '';
@@ -1678,6 +1828,7 @@
                 html += `<a class="tool-card" ${clickAction} style="--card-accent: ${color}">
                     ${priceBadge}
                     <div class="compare-checkbox" data-name="${tool.name}" onclick="toggleCompare(this.dataset.name, this); event.stopPropagation();"></div>
+                    <button class="bookmark-btn" data-name="${tool.name}" onclick="toggleBookmark(this.dataset.name, this); event.stopPropagation(); event.preventDefault();" title="收藏"></button>
                     <div class="card-header">
                         <div class="card-icon" style="background: linear-gradient(135deg, ${color}33, ${color}11)">${tool.icon}</div>
                         <div class="card-title-group">
