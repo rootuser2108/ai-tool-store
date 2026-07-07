@@ -952,6 +952,30 @@
             color: var(--text-secondary);
             line-height: 1.6;
         }
+
+        .compare-checkbox{position:absolute;top:12px;right:12px;z-index:3;width:22px;height:22px;border-radius:6px;border:2px solid rgba(255,255,255,.3);background:rgba(0,0,0,.3);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;font-size:.8rem;color:transparent}
+        .compare-checkbox:hover{border-color:var(--accent-2);background:rgba(0,206,201,.1)}
+        .compare-checkbox.active{border-color:var(--accent-2);background:var(--accent-2);color:#fff}
+        .compare-checkbox.active::after{content:'\2713'}
+        .compare-bar{position:fixed;bottom:0;left:0;right:0;z-index:100;background:linear-gradient(135deg,#1a1a3e,#12122a);border-top:2px solid var(--accent-1);padding:12px 24px;display:none;align-items:center;gap:12px;box-shadow:0 -4px 20px rgba(0,0,0,.5)}
+        .compare-bar.show{display:flex}
+        .compare-bar .cb-label{color:var(--text-secondary);font-size:.85rem;white-space:nowrap}
+        .compare-bar .cb-tools{display:flex;gap:8px;flex:1;overflow-x:auto}
+        .compare-bar .cb-chip{background:var(--bg-card);border:1px solid var(--border);padding:4px 12px;border-radius:20px;font-size:.8rem;display:flex;align-items:center;gap:6px;white-space:nowrap;color:var(--text-primary)}
+        .compare-bar .cb-chip .cb-remove{cursor:pointer;color:var(--accent-7);font-weight:bold;margin-left:4px}
+        .compare-bar .cb-btn{padding:8px 20px;border-radius:8px;border:none;background:linear-gradient(135deg,var(--accent-1),var(--accent-2));color:white;font-weight:600;cursor:pointer;white-space:nowrap}
+        .compare-bar .cb-btn:disabled{opacity:.4;cursor:not-allowed}
+        .compare-modal-overlay{display:none;position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);align-items:center;justify-content:center}
+        .compare-modal-overlay.show{display:flex}
+        .compare-modal{background:var(--bg-secondary);border:1px solid var(--border);border-radius:20px;width:90vw;max-width:900px;max-height:80vh;overflow:auto;padding:32px}
+        .compare-modal h2{font-size:1.4rem;margin-bottom:20px;text-align:center}
+        .compare-table{width:100%;border-collapse:collapse}
+        .compare-table th,.compare-table td{padding:12px 16px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
+        .compare-table th{color:var(--text-secondary);font-size:.85rem;width:100px}
+        .compare-table .ct-name{font-weight:700;font-size:1rem}
+        .compare-table .ct-icon{font-size:1.5rem;text-align:center}
+        .compare-modal .cm-close{display:block;margin:20px auto 0;padding:10px 28px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text-primary);cursor:pointer;font-size:.9rem}
+        .compare-modal .cm-close:hover{background:var(--bg-card)}
     </style>
 </head>
 <body>
@@ -1653,6 +1677,7 @@
 
                 html += `<a class="tool-card" ${clickAction} style="--card-accent: ${color}">
                     ${priceBadge}
+                    <div class="compare-checkbox" data-name="${tool.name}" onclick="toggleCompare(this.dataset.name, this); event.stopPropagation();"></div>
                     <div class="card-header">
                         <div class="card-icon" style="background: linear-gradient(135deg, ${color}33, ${color}11)">${tool.icon}</div>
                         <div class="card-title-group">
@@ -2251,6 +2276,71 @@
 
     // Load saved config on page load
     loadChatConfig();
+
+    // ===== Compare Feature =====
+    var compareList = [];
+
+    function toggleCompare(name, el) {
+        event.stopPropagation();
+        event.preventDefault();
+        var idx = compareList.indexOf(name);
+        if (idx > -1) {
+            compareList.splice(idx, 1);
+            el.classList.remove('active');
+        } else {
+            if (compareList.length >= 4) { alert('\u6700\u591a\u5bf9\u6bd44\u4e2a\u5de5\u5177'); return; }
+            compareList.push(name);
+            el.classList.add('active');
+        }
+        updateCompareBar();
+    }
+
+    function updateCompareBar() {
+        var bar = document.getElementById('compareBar');
+        var td = document.getElementById('compareTools');
+        var btn = document.getElementById('compareBtn');
+        if (compareList.length === 0) { bar.classList.remove('show'); return; }
+        bar.classList.add('show');
+        td.innerHTML = compareList.map(function(n) {
+            var safe = n.replace(/'/g, "\\'");
+            return '<span class="cb-chip">' + n + '<span class="cb-remove" onclick="removeCompare(\'' + safe + '\')">&times;</span></span>';
+        }).join('');
+        btn.disabled = compareList.length < 2;
+        btn.textContent = compareList.length < 2 ? '\u81f3\u5c11\u90092\u4e2a' : '\u5bf9\u6bd4(' + compareList.length + ')';
+    }
+
+    function removeCompare(name) {
+        var idx = compareList.indexOf(name);
+        if (idx > -1) compareList.splice(idx, 1);
+        document.querySelectorAll('.compare-checkbox').forEach(function(el) {
+            if (el.dataset.name === name) el.classList.remove('active');
+        });
+        updateCompareBar();
+    }
+
+    function showCompareModal() {
+        if (compareList.length < 2) return;
+        var items = compareList.map(function(n) { return tools.find(function(t) { return t.name === n; }); }).filter(Boolean);
+        if (items.length < 2) return;
+        var pl = {free:'\u514d\u8d39',freemium:'\u6709\u514d\u8d39\u7248',paid:'\u4ed8\u8d39',open:'\u5f00\u6e90'};
+        var ci = function(cat) { return (categoryNames[cat]||{}).name||cat; };
+        var h = '<table class="compare-table"><tbody>';
+        h += '<tr><th></th>' + items.map(function(t){return '<td class="ct-icon">'+t.icon+'</td>';}).join('') + '</tr>';
+        h += '<tr><th>\u540d\u79f0</th>' + items.map(function(t){return '<td class="ct-name">'+t.name+'</td>';}).join('') + '</tr>';
+        h += '<tr><th>\u5f00\u53d1\u8005</th>' + items.map(function(t){return '<td>'+t.maker+'</td>';}).join('') + '</tr>';
+        h += '<tr><th>\u5206\u7c7b</th>' + items.map(function(t){return '<td>'+ci(t.category)+'</td>';}).join('') + '</tr>';
+        h += '<tr><th>\u5b9a\u4ef7</th>' + items.map(function(t){return '<td>'+(pl[t.price]||t.price||'-')+'</td>';}).join('') + '</tr>';
+        h += '<tr><th>\u7b80\u4ecb</th>' + items.map(function(t){return '<td>'+t.desc+'</td>';}).join('') + '</tr>';
+        h += '<tr><th>\u6807\u7b7e</th>' + items.map(function(t){return '<td>'+(t.tagLabels||[]).join(', ')+'</td>';}).join('') + '</tr>';
+        if(items.some(function(t){return t.url;})) h += '<tr><th>\u94fe\u63a5</th>' + items.map(function(t){return t.url?'<td><a href="'+t.url+'" target="_blank" style="color:var(--accent-2)">\u8bbf\u95ee \u2192</a></td>':'<td>-</td>';}).join('') + '</tr>';
+        h += '</tbody></table>';
+        document.getElementById('compareContent').innerHTML = h;
+        document.getElementById('compareModalOverlay').classList.add('show');
+    }
+
+    function closeCompareModal() {
+        document.getElementById('compareModalOverlay').classList.remove('show');
+    }
     </script>
     <!-- SEO: 为搜索引擎提供不依赖JS的工具列表 -->
     <noscript>
@@ -2279,5 +2369,17 @@
             <p>论文格式检查技能 v3.0 | 路基路面施工技术指导 v2.0 | 公路路基路面工程 v2.0 | 简历修改与美化 v1.2 | 备课大师 v1.2</p>
         </div>
     </noscript>
+    <div class="compare-bar" id="compareBar">
+        <span class="cb-label">📊 对比</span>
+        <div class="cb-tools" id="compareTools"></div>
+        <button class="cb-btn" id="compareBtn" disabled onclick="showCompareModal()">开始对比</button>
+    </div>
+    <div class="compare-modal-overlay" id="compareModalOverlay" onclick="if(event.target===this)closeCompareModal()">
+        <div class="compare-modal">
+            <h2>📊 工具对比</h2>
+            <div id="compareContent"></div>
+            <button class="cm-close" onclick="closeCompareModal()">关闭</button>
+        </div>
+    </div>
 </body>
 </html>
