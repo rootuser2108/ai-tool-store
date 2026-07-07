@@ -34,6 +34,21 @@
     }
 
     // ===== Scene Recommendations =====
+
+    // Affiliate links mapping (tool name -> affiliate URL)
+    // Replace these with your actual affiliate URLs to earn commissions
+    const affiliateUrls = {
+        'ChatGPT': 'https://chat.openai.com?ref=aitoolstore',
+        'Claude': 'https://claude.ai?ref=aitoolstore',
+        'Midjourney': 'https://www.midjourney.com?ref=aitoolstore',
+        'Cursor': 'https://cursor.sh?ref=aitoolstore',
+        'GitHub Copilot': 'https://github.com/features/copilot?ref=aitoolstore',
+        'Notion AI': 'https://www.notion.so?ref=aitoolstore',
+        'Gamma': 'https://gamma.app?ref=aitoolstore',
+        'Suno AI': 'https://suno.com?ref=aitoolstore',
+        'Perplexity': 'https://www.perplexity.ai?ref=aitoolstore'
+    };
+
     const scenes = [
         {id:'student', icon:'\ud83c\udf93', name:'学生党必备', desc:'课程论文、学习笔记、简历求职——这套工具包让你效率翻倍，少加班多出成果。', tools:['ChatGPT','DeepSeek','Kimi','Gamma','Notion AI','论文格式检查技能']},
         {id:'creator', icon:'\ud83c\udfa8', name:'自媒体创作套装', desc:'写文案、做图、剪视频、配乐——一个人就能搞定一整套内容生产流。', tools:['ChatGPT','Midjourney','DALL·E 3','Suno AI','可灵AI','剪映','HeyGen']},
@@ -1102,6 +1117,11 @@
         .fav-filter.show { display:flex; }
         .fav-filter button { padding:6px 14px; border-radius:16px; border:1px solid var(--accent-4); background:transparent; color:var(--accent-4); cursor:pointer; font-size:.8rem; transition:all .2s; }
         .fav-filter button.active { background:var(--accent-4); color:#000; }
+
+        /* Affiliate / Promotion */
+        .affiliate-badge { position:absolute; bottom:12px; right:12px; font-size:.65rem; padding:2px 6px; border-radius:4px; background:rgba(253,203,110,.15); color:var(--accent-4); border:1px solid rgba(253,203,110,.2); z-index:2; }
+        .affiliate-disclosure { position:relative; z-index:10; max-width:1400px; margin:0 auto 30px; padding:0 24px; text-align:center; }
+        .affiliate-disclosure p { font-size:.75rem; color:var(--text-secondary); opacity:.7; }
     </style>
 </head>
 <body>
@@ -1364,6 +1384,9 @@
 
     <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
+    <div class="affiliate-disclosure">
+        <p>💡 部分链接为推广链接，通过本站链接访问并购买可帮助我们维持运营，感谢您的支持！</p>
+    </div>
     <footer>
         <p>AI 工具超市 &copy; 2026 · 收录全球优质 AI 工具</p>
         <p style="margin-top: 8px; font-size: 0.8rem;">数据更新于 2026 年 7 月 · 工具链接均指向官方网站</p>
@@ -1740,7 +1763,7 @@
             const tool = tools.find(t => t.name === fp.name);
             if (!tool) return '';
             const isSkill = tool.category === 'engineering' || tool.category === 'xiaping';
-            const clickAction = isSkill ? `onclick="openModal('${tool.category}-${tools.indexOf(tool)}'); return false;"` : `href="${tool.url}" target="_blank" rel="noopener noreferrer"`;
+            const clickAction = isSkill ? `onclick="openModal('${tool.category}-${tools.indexOf(tool)}'); return false;"` : `href="${affiliateUrls[tool.name] || tool.url}" target="_blank" rel="noopener noreferrer"`;
             const color = categoryColors[tool.category] || 'var(--accent-1)';
             return `<a class="featured-card" ${clickAction} style="--card-accent: ${color}">
                 <div class="fc-icon">${tool.icon}</div>
@@ -1829,6 +1852,7 @@
                     ${priceBadge}
                     <div class="compare-checkbox" data-name="${tool.name}" onclick="toggleCompare(this.dataset.name, this); event.stopPropagation();"></div>
                     <button class="bookmark-btn" data-name="${tool.name}" onclick="toggleBookmark(this.dataset.name, this); event.stopPropagation(); event.preventDefault();" title="收藏"></button>
+                    ${affiliateUrls[tool.name] ? '<span class="affiliate-badge">推广</span>' : ''}
                     <div class="card-header">
                         <div class="card-icon" style="background: linear-gradient(135deg, ${color}33, ${color}11)">${tool.icon}</div>
                         <div class="card-title-group">
