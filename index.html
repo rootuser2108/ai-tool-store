@@ -1025,7 +1025,202 @@
         .affiliate-badge { position:absolute; bottom:12px; right:12px; font-size:.65rem; padding:2px 6px; border-radius:4px; background:rgba(253,203,110,.15); color:var(--accent-4); border:1px solid rgba(253,203,110,.2); z-index:2; }
         .affiliate-disclosure { position:relative; z-index:10; max-width:1400px; margin:0 auto 30px; padding:0 24px; text-align:center; }
         .affiliate-disclosure p { font-size:.75rem; color:var(--text-secondary); opacity:.7; }
-    </style>
+    
+        /* === Merged Service Page Styles (svc- prefix) === */
+        .svc-hero {
+            text-align: center;
+            padding: 60px 20px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        .svc-hero::before {
+            content: '';
+            position: absolute;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(102,126,234,0.15) 0%, transparent 70%);
+            top: 20%; left: 50%; transform: translateX(-50%);
+            pointer-events: none;
+        }
+        .svc-badge {
+            background: rgba(102,126,234,0.15);
+            border: 1px solid rgba(102,126,234,0.3);
+            border-radius: 30px;
+            padding: 8px 24px;
+            font-size: 14px; color: #8b9cf7;
+            margin-bottom: 30px;
+            display: inline-block;
+        }
+        .svc-hero h1 {
+            font-size: clamp(32px, 5vw, 52px);
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+        .svc-hero p {
+            font-size: 1.1rem; color: var(--text-secondary);
+            max-width: 600px; margin: 0 auto 30px;
+            line-height: 1.8;
+        }
+        .svc-stats {
+            display: flex; gap: 40px; margin-top: 20px; justify-content: center;
+        }
+        .svc-stat { text-align: center; }
+        .svc-stat-num {
+            font-size: 2.2rem; font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #f093fb);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .svc-stat-label { font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px; }
+        .svc-cta-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white; text-decoration: none;
+            padding: 16px 48px; border-radius: 50px;
+            font-size: 1.1rem; font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 20px rgba(102,126,234,0.3);
+            margin-top: 20px;
+        }
+        .svc-cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(102,126,234,0.5);
+        }
+        .svc-section { padding: 60px 20px; max-width: 1100px; margin: 0 auto; }
+        .svc-section-title {
+            font-size: 2rem; font-weight: 800; text-align: center;
+            margin-bottom: 12px; color: #fff;
+        }
+        .svc-section-sub {
+            text-align: center; color: var(--text-secondary); font-size: 1rem;
+            margin-bottom: 40px;
+        }
+        .svc-services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+        .svc-service-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 32px 28px;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+        .svc-service-card:hover {
+            border-color: rgba(102,126,234,0.4);
+            transform: translateY(-4px);
+        }
+        .svc-service-icon { font-size: 2.5rem; margin-bottom: 16px; }
+        .svc-service-card h3 { font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 10px; }
+        .svc-service-card > p { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7; }
+        .svc-price {
+            margin-top: 16px; font-size: 1.5rem; font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #f093fb);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .svc-price-note { font-size: 0.85rem; color: #666; margin-top: 4px; }
+        .svc-tag {
+            display: inline-block; margin-top: 12px;
+            background: rgba(102,126,234,0.1); border: 1px solid rgba(102,126,234,0.2);
+            border-radius: 6px; padding: 4px 12px;
+            font-size: 0.8rem; color: #8b9cf7;
+        }
+        /* Process */
+        .svc-process-steps {
+            display: flex; flex-direction: column; gap: 0;
+            position: relative; max-width: 700px; margin: 0 auto;
+        }
+        .svc-process-steps::before {
+            content: '';
+            position: absolute; left: 28px; top: 20px; bottom: 20px;
+            width: 2px;
+            background: linear-gradient(180deg, #667eea, #764ba2, #f093fb);
+            opacity: 0.3;
+        }
+        .svc-process-step {
+            display: flex; gap: 24px; align-items: flex-start;
+            padding: 20px 0;
+        }
+        .svc-step-num {
+            width: 56px; height: 56px; flex-shrink: 0;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem; font-weight: 800; color: white;
+            position: relative; z-index: 1;
+        }
+        .svc-step-content h4 { font-size: 1.2rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
+        .svc-step-content p { font-size: 0.95rem; color: var(--text-secondary); }
+        /* Cases */
+        .svc-cases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .svc-case-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px; padding: 28px;
+        }
+        .svc-case-type {
+            font-size: 0.8rem; color: #8b9cf7;
+            background: rgba(102,126,234,0.1);
+            border-radius: 4px; padding: 4px 10px;
+            display: inline-block; margin-bottom: 12px;
+        }
+        .svc-case-card h4 { font-size: 1.1rem; color: #fff; margin-bottom: 8px; }
+        .svc-case-card > p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; }
+        .svc-case-result {
+            margin-top: 12px; padding-top: 12px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            font-size: 0.9rem; color: #38ef7d; font-weight: 600;
+        }
+        /* FAQ */
+        .svc-faq-list { max-width: 700px; margin: 0 auto; }
+        .svc-faq-item {
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding: 20px 0;
+        }
+        .svc-faq-q { font-size: 1.05rem; font-weight: 600; color: #fff; margin-bottom: 8px; }
+        .svc-faq-a { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7; }
+        /* CTA */
+        .svc-cta-section {
+            text-align: center; padding: 60px 20px;
+            background: linear-gradient(180deg, transparent 0%, rgba(102,126,234,0.05) 50%, transparent 100%);
+            border-radius: 20px;
+            margin: 40px auto;
+            max-width: 1100px;
+        }
+        .svc-cta-section h2 {
+            font-size: 2rem; font-weight: 800; color: #fff; margin-bottom: 16px;
+        }
+        .svc-cta-section > p { color: var(--text-secondary); margin-bottom: 30px; font-size: 1rem; }
+        .svc-contact-methods {
+            display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        .svc-contact-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px; padding: 24px 36px;
+            text-align: center;
+        }
+        .svc-contact-item .label { font-size: 0.85rem; color: #666; margin-bottom: 8px; }
+        .svc-contact-item .value { font-size: 1.1rem; color: #fff; font-weight: 600; }
+        @media (max-width: 768px) {
+            .svc-hero h1 { font-size: 28px; }
+            .svc-stats { gap: 20px; }
+            .svc-stat-num { font-size: 1.6rem; }
+            .svc-services-grid { grid-template-columns: 1fr; }
+            .svc-contact-methods { flex-direction: column; align-items: center; }
+        }
+
+</style>
 </head>
 <body>
     <div class="bg-animation">
@@ -1037,7 +1232,7 @@
     <header>
         <div class="logo">🛒 AI 工具超市</div>
         <p class="subtitle">发现 2026 年最好用的 AI 工具，一站式浏览、即点即用</p>
-        <a href="services.html" style="display:inline-block;margin-bottom:18px;padding:8px 24px;background:linear-gradient(135deg,var(--accent-1),var(--accent-3));border-radius:25px;color:#fff;text-decoration:none;font-size:0.95rem;font-weight:600;transition:all 0.3s;box-shadow:0 4px 15px rgba(108,92,231,0.3);">💎 定制服务</a>
+        <a href="javascript:void(0)" onclick="document.querySelector('[data-category=service]').click()" style="display:inline-block;margin-bottom:18px;padding:8px 24px;background:linear-gradient(135deg,var(--accent-1),var(--accent-3));border-radius:25px;color:#fff;text-decoration:none;font-size:0.95rem;font-weight:600;transition:all 0.3s;box-shadow:0 4px 15px rgba(108,92,231,0.3);">💎 定制服务</a>
         <div class="search-container">
             <span class="search-icon">🔍</span>
             <input type="text" class="search-input" id="searchInput" placeholder="搜索 AI 工具名称、功能或分类...">
@@ -1988,70 +2183,181 @@
         main.innerHTML = html;
     }
 
-    // ===== 定制服务渲染 =====
+    // ===== 定制服务渲染（完整内嵌页面） =====
     function renderService() {
         const main = document.getElementById('mainContent');
         main.innerHTML = `
-        <div class="service-hero">
-            <h1>💎 AI 定制开发服务</h1>
-            <p>从需求分析到交付上线，提供一站式 AI 技能、Agent 智能体、自动化工作流的定制开发服务。已为多位用户交付高质量 AI 解决方案。</p>
+        <div class="svc-hero">
+            <div class="svc-badge">🤖 AI工具超市 · 定制服务</div>
+            <h1>用AI帮你省钱<br>帮你赚钱</h1>
+            <p>一个人+AI，能干一支团队的活。品牌设计、视频制作、内容运营、自动化部署——交给我，用AI把成本打下来。</p>
+            <div class="svc-stats">
+                <div class="svc-stat"><div class="svc-stat-num">55+</div><div class="svc-stat-label">AI工具储备</div></div>
+                <div class="svc-stat"><div class="svc-stat-num">10+</div><div class="svc-stat-label">服务类型</div></div>
+                <div class="svc-stat"><div class="svc-stat-num">24h</div><div class="svc-stat-label">快速响应</div></div>
+            </div>
+            <a href="javascript:void(0)" onclick="document.getElementById('svcContact').scrollIntoView({behavior:'smooth'})" class="svc-cta-btn">立即咨询 →</a>
         </div>
 
-        <div class="service-grid">
-            <div class="service-card" style="--card-color-1: #55efc4; --card-color-2: #00cec9;">
-                <span class="card-badge hot">🔥 热销</span>
-                <h3>🛠️ 技能包定制</h3>
-                <p class="service-desc">为你的 Coze/扣子 Agent 定制专属技能包（Skill），从 SKILL.md 编写到脚本开发、测试上线全流程覆盖。</p>
-                <div class="service-price">
-                    <span class="price">¥99</span>
-                    <span class="unit">起 / 单个技能包</span>
+        <div class="svc-section">
+            <div class="svc-section-title">能帮你做什么</div>
+            <div class="svc-section-sub">用AI大幅降低你的成本，用更少的钱拿到更好的结果</div>
+            <div class="svc-services-grid">
+                <div class="svc-service-card">
+                    <div class="svc-service-icon">🎨</div>
+                    <h3>AI品牌设计</h3>
+                    <p>Logo设计、品牌VI、海报、宣传册、名片。AI辅助出图+人工精修，3天交付，效果媲美专业设计公司。</p>
+                    <div class="svc-price">¥299起</div>
+                    <div class="svc-price-note">传统设计公司报价 3000+</div>
+                    <div class="svc-tag">适合：初创品牌 / 个体户 / 小商家</div>
                 </div>
-                <a class="service-cta primary" href="services.html" target="_blank">查看详情 →</a>
-            </div>
-
-            <div class="service-card" style="--card-color-1: #ffd700; --card-color-2: #ff8c00;">
-                <span class="card-badge popular">⭐ 推荐</span>
-                <h3>🧠 Agent 智能体搭建</h3>
-                <p class="service-desc">从零搭建完整的 AI Agent，包含人设设定、技能体系、记忆系统、工作流编排，打造专属 AI 助手。</p>
-                <div class="service-price">
-                    <span class="price">¥299</span>
-                    <span class="unit">起 / 整套Agent</span>
+                <div class="svc-service-card">
+                    <div class="svc-service-icon">🎬</div>
+                    <h3>AI视频制作</h3>
+                    <p>宣传片、产品视频、短视频脚本+制作。AI生成画面+剪辑+配音，交付即可用。</p>
+                    <div class="svc-price">¥199起</div>
+                    <div class="svc-price-note">传统视频制作报价 2000+</div>
+                    <div class="svc-tag">适合：电商 / 本地商家 / 自媒体</div>
                 </div>
-                <a class="service-cta primary" href="services.html" target="_blank">查看详情 →</a>
-            </div>
-
-            <div class="service-card" style="--card-color-1: #a29bfe; --card-color-2: #6c5ce7;">
-                <span class="card-badge new">✨ 新品</span>
-                <h3>⚡ 自动化工作流</h3>
-                <p class="service-desc">设计并实现自动化工作流方案：定时任务、数据监控、消息推送、多系统联动，让 AI 替你完成重复工作。</p>
-                <div class="service-price">
-                    <span class="price">¥199</span>
-                    <span class="unit">起 / 单套方案</span>
+                <div class="svc-service-card">
+                    <div class="svc-service-icon">📱</div>
+                    <h3>AI内容运营</h3>
+                    <p>小红书/抖音/公众号代运营。AI批量生产高质量内容，从选题到发布一条龙。</p>
+                    <div class="svc-price">¥999/月起</div>
+                    <div class="svc-price-note">含30篇内容+发布+数据报告</div>
+                    <div class="svc-tag">适合：没精力运营的老板</div>
                 </div>
-                <a class="service-cta secondary" href="services.html" target="_blank">查看详情 →</a>
-            </div>
-
-            <div class="service-card" style="--card-color-1: #ff7675; --card-color-2: #d63031;">
-                <span class="card-badge hot">🏢 企业级</span>
-                <h3>🚀 全栈解决方案</h3>
-                <p class="service-desc">面向团队/企业的全套 AI 解决方案：网站/小程序开发、API对接、AI能力集成、数据分析看板，按需定制。</p>
-                <div class="service-price">
-                    <span class="price">面议</span>
-                    <span class="unit">按需报价</span>
+                <div class="svc-service-card">
+                    <div class="svc-service-icon">🏨</div>
+                    <h3>AI酒店/民宿运营</h3>
+                    <p>智能定价、评论回复、营销文案、OTA优化。让AI帮你管好酒店线上运营。</p>
+                    <div class="svc-price">¥1999/月起</div>
+                    <div class="svc-price-note">含定价策略+内容+评论管理</div>
+                    <div class="svc-tag">适合：酒店 / 民宿 / 公寓</div>
                 </div>
-                <a class="service-cta secondary" href="services.html" target="_blank">查看详情 →</a>
+                <div class="svc-service-card">
+                    <div class="svc-service-icon">🤖</div>
+                    <h3>AI自动化部署</h3>
+                    <p>帮你搭建AI客服、AI知识库、自动化工作流。一次部署，长期省人力成本。</p>
+                    <div class="svc-price">¥499起</div>
+                    <div class="svc-price-note">按需求复杂度定价</div>
+                    <div class="svc-tag">适合：中小企业 / 团队</div>
+                </div>
+                <div class="svc-service-card">
+                    <div class="svc-service-icon">🎓</div>
+                    <h3>AI培训/咨询</h3>
+                    <p>1对1教你用AI提效。写文案、做设计、剪视频、搞数据——手把手带你上手。</p>
+                    <div class="svc-price">¥99/次</div>
+                    <div class="svc-price-note">60分钟1对1指导</div>
+                    <div class="svc-tag">适合：想学AI的职场人</div>
+                </div>
             </div>
         </div>
 
-        <div style="text-align:center; padding: 20px 24px 60px;">
-            <a href="services.html" target="_blank" style="display:inline-block;padding:14px 40px;background:linear-gradient(135deg,var(--accent-1),var(--accent-3));border-radius:30px;color:#fff;text-decoration:none;font-size:1.05rem;font-weight:600;transition:all 0.3s;box-shadow:0 4px 15px rgba(108,92,231,0.3);">查看完整定制服务详情 →</a>
-            <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 16px; line-height: 1.8;">
-                💡 所有定制服务均支持先沟通需求再报价，不合适不收费<br>
-                ⚡ 通常 2 小时内回复，复杂需求 24 小时内出方案
-            </p>
+        <div class="svc-section">
+            <div class="svc-section-title">怎么合作</div>
+            <div class="svc-section-sub">4步搞定，简单高效</div>
+            <div class="svc-process-steps">
+                <div class="svc-process-step">
+                    <div class="svc-step-num">1</div>
+                    <div class="svc-step-content">
+                        <h4>聊聊需求</h4>
+                        <p>微信/电话沟通，了解你要做什么、预算多少、时间要求。</p>
+                    </div>
+                </div>
+                <div class="svc-process-step">
+                    <div class="svc-step-num">2</div>
+                    <div class="svc-step-content">
+                        <h4>出方案报价</h4>
+                        <p>24小时内给你具体方案和报价，不满意可以调整，不强制下单。</p>
+                    </div>
+                </div>
+                <div class="svc-process-step">
+                    <div class="svc-step-num">3</div>
+                    <div class="svc-step-content">
+                        <h4>AI生产+交付</h4>
+                        <p>AI高效生产，过程中给你看进度，满意了再付尾款。</p>
+                    </div>
+                </div>
+                <div class="svc-process-step">
+                    <div class="svc-step-num">4</div>
+                    <div class="svc-step-content">
+                        <h4>售后支持</h4>
+                        <p>交付后7天内免费修改，后续有问题随时找我。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="svc-section">
+            <div class="svc-section-title">做过什么</div>
+            <div class="svc-section-sub">部分案例展示</div>
+            <div class="svc-cases-grid">
+                <div class="svc-case-card">
+                    <div class="svc-case-type">品牌设计</div>
+                    <h4>某电商品牌全套VI</h4>
+                    <p>Logo + 品牌色 + 包装 + 详情页 + 社交媒体模板，AI辅助设计3天完成。</p>
+                    <div class="svc-case-result">✅ 客户满意度5分，成本仅传统设计的1/10</div>
+                </div>
+                <div class="svc-case-card">
+                    <div class="svc-case-type">视频制作</div>
+                    <h4>酒店宣传片</h4>
+                    <p>30秒酒店宣传视频，AI生成画面+配音+剪辑，从零到成片2天交付。</p>
+                    <div class="svc-case-result">✅ 视频上线后OTA平台浏览量提升40%</div>
+                </div>
+                <div class="svc-case-card">
+                    <div class="svc-case-type">AI工具站</div>
+                    <h4>AI工具超市</h4>
+                    <p>独立搭建55+AI工具导航站，10个分类，GitHub Pages免费部署。</p>
+                    <div class="svc-case-result">✅ 持续运营中，日均UV增长中</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="svc-section">
+            <div class="svc-section-title">常见问题</div>
+            <div class="svc-faq-list">
+                <div class="svc-faq-item">
+                    <div class="svc-faq-q">Q: 价格为什么这么便宜？</div>
+                    <div class="svc-faq-a">因为AI把很多重复劳动替代了。传统设计师做一张海报要2天，我用AI+人工精修半天搞定。成本降了，价格自然降。但质量不打折——最终交付物都是经过人工审核的。</div>
+                </div>
+                <div class="svc-faq-item">
+                    <div class="svc-faq-q">Q: 交付的东西是AI生成的，质量能保证吗？</div>
+                    <div class="svc-faq-a">AI是工具，不是最终交付。我会在AI生成结果基础上做人工调整、精修、审核。你拿到的是最终成品，不需要关心是不是AI做的。</div>
+                </div>
+                <div class="svc-faq-item">
+                    <div class="svc-faq-q">Q: 可以先看看效果再付款吗？</div>
+                    <div class="svc-faq-a">可以。设计类服务先出初稿确认方向，满意了再付尾款；内容运营类可以先试一周。</div>
+                </div>
+                <div class="svc-faq-item">
+                    <div class="svc-faq-q">Q: 能开发票吗？</div>
+                    <div class="svc-faq-a">可以开电子发票，支持对公转账。</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="svc-cta-section" id="svcContact">
+            <h2>有需求？聊一聊</h2>
+            <p>不强制下单，先聊需求再说。24小时内回复。</p>
+            <a href="javascript:void(0)" onclick="navigator.clipboard.writeText('RootUser_2108833748').then(()=>{const t=this;t.textContent='已复制微信号 ✓';setTimeout(()=>{t.textContent='微信咨询 →'},2000)})" class="svc-cta-btn">微信咨询 →</a>
+            <div class="svc-contact-methods">
+                <div class="svc-contact-item">
+                    <div class="label">微信号</div>
+                    <div class="value">RootUser_2108833748</div>
+                </div>
+                <div class="svc-contact-item">
+                    <div class="label">AI工具超市</div>
+                    <div class="value">55+工具免费用</div>
+                </div>
+                <div class="svc-contact-item">
+                    <div class="label">响应时间</div>
+                    <div class="value">24小时内</div>
+                </div>
+            </div>
         </div>
         `;
     }
+
     // Modal functions
     function openModal(key) {
         const [cat, idxStr] = key.split('-');
