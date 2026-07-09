@@ -1,0 +1,31 @@
+# AI工具超市
+> 2026年最全AI工具导航网站，收录75+款AI工具
+
+## 网站简介
+AI工具超市是一个免费的AI工具导航和推荐平台，收录了75+款2026年最新AI工具，覆盖AI助手、写作、图像、视频、音乐、编程、搜索、办公、Agent、工程等专业领域。同时提供6个原创AI技能包供免费下载。
+
+## 主要分类
+- AI助手：ChatGPT、Claude、DeepSeek、GPT-5.6、Grok 4.5、腾讯混元Hy3等
+- AI绘画/图像：Midjourney、DALL-E、Stable Diffusion、Meta Muse Image等
+- AI视频：Sora、Runway、可灵、即梦等
+- AI音乐：Suno、Udio、天工音乐等
+- AI编程：Cursor、GitHub Copilot、CodeGeeX、Perplexity Teammate等
+- AI搜索：Perplexity、秘塔AI搜索、集微4.0等
+- AI写作：Jasper、Copy.ai、Notion AI等
+- AI办公：Microsoft Copilot、Google Gemini、WPS AI等
+- AI Agent：Coze扣子、Dify、支付宝AI开放平台等
+
+## 原创技能
+- 论文格式检查技能 v3.0
+- 路基路面施工技术指导 v2.0
+- 公路路基路面工程 v2.0
+- 简历修改与美化 v1.2
+- 备课大师 v1.3
+- AI漫剧制作技能 v1.0.5
+
+## 网站地址
+https://rootuser2108.github.io/ai-tool-store/
+
+## 联系方式
+网站由 OPC 一人工作室运营，提供AI定制服务（品牌设计、视频制作、内容运营、酒店AI运营等）
+定制服务页面：https://rootuser2108.github.io/ai-tool-store/services.html
